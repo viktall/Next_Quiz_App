@@ -1,86 +1,101 @@
 import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import MenuItems from './Data';
-import Grid from '@mui/material/Grid';
-import {Button} from '@mui/material';
-import { ErrorComponent } from './Error_Msg';
 import Router from 'next/router';
+import categories from './Data';
+import {Button, TextField, MenuItem, Grid, Paper} from '@mui/material';
 
 
-export const DropMenu=({name, category, setName, setCategory})=>{
-       const [error, setError]=useState(false)
+export const DropMenu=()=>{
+    const [details, setDetails]=useState({names:'', category:''})
+    
+    const handlechange=(e)=>{
 
-   const HandleSubmit=(e)=>{
+        const{name, value}=e.target;
+        setDetails({ ...details, [name]:value })
+
+    }
+
+    const{names, category}=details
+       const HandleSubmit=(e)=>{
+
         
-        if(name.trim() && category.trim()){     
-                setError(false)
-                e.preventDefault()
-                setName('')
-                setCategory('')
-                Router.push({pathname:'/Quiz_Page',
-                             query:{name, category}
-                            })
+        
+                    if(name.trim && category.trim()){   
 
-        }else{
-                setError(true)
-                e.preventDefault()
-                setName('')
-                setCategory('')
-             }
+                            e.preventDefault();
+                            setDetails('')
+                            
+                            Router.push({pathname:'/Quiz_Page',
+                                        query:{names, category}
+                                        })
 
-} 
+                    }else{
+                            e.preventDefault()
+                            setDetails('')
+                        }
+
+            }
+
+
+    const Paperstyle={padding:20, height:'60vh', width:400, margin:'80px auto'}
+    const pad={mb:'20px'}
+    console.log(details.category)
+    
 
 return(
 
-<>
-    
-      <Grid
-            container
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-        >
 
-        <Grid item xs={10}>
-        {error && <ErrorComponent>Please enter Your name</ErrorComponent>}
-            <form onSubmit={HandleSubmit}>
+      <Grid>
+        <Paper style={Paperstyle} elevation={10}>
+            <Grid align='center'>
+                vh 
+            </Grid>
+            <form onSubmit={HandleSubmit}>  
                     <TextField 
-                        fullWidth 
                         label="Enter your name here" 
                         variant="outlined" 
-                        style={{display:'flex', marginTop:30, marginBottom:18}}
-                        onChange={e=>setName(e.target.value)}
-                        value={name}/>
+                        onChange={handlechange}
+                        value={names}
+                        name="names"
+                        required
+                        fullWidth
+                        sx={pad}
+                        />
             
                     <TextField 
                         select 
-                        fullWidth
                         label=" Select Category" 
                         variant="outlined" 
-                        style={{marginBottom:18}}
-                        onChange={e=>setCategory(e.target.value)}
-                        value={category}>
-
-                                    {MenuItems.map(menu=>(
+                        onChange={handlechange}
+                        defaultValue={0}
+                        value={category}
+                        name="category"
+                        required
+                        fullWidth
+                        sx={pad}
+                        >
+                                    {categories.map((cat)=>(
                                         <MenuItem 
-                                            key={menu.value} 
-                                            value={menu.value}
+                                            key={cat.value} 
+                                            value={cat.category}
                                         >
-                                            {menu.category}
+                                            {cat.category}
                                         </MenuItem>
                                     
                                     ))}
                     </TextField>  
             
-            <div>
-                <Button type='submit' fullWidth variant="contained">SUBMIT</Button>
-            </div>
+                <Button 
+                    type='submit' 
+                    variant="contained" 
+                    size='large' 
+                    fullWidth
+                    >
+
+                        SUBMIT
+                </Button>
+
             </form>
+            
+            </Paper>
         </Grid>
-      </Grid>
-
-    </>
-
-    
     )}

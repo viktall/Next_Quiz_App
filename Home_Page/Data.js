@@ -1,11 +1,11 @@
-const MenuItems=[
-    {category: 'General knowledge', value: 'knowledge'},
-    {category: 'Science', value: 'Sci'},
-    {category: 'Mathematics', value: 'Maths'},
-    {category: 'History', value: 'Hist'},
-    {category: 'Geography', value: 'Geo'},
-    {category: 'Computer', value: 'Comp'},
-    {category: 'Art', value: 'art'}
+const categories=[
+    {category: 'General knowledge', value:1},
+    {category: 'Science', value:'hh'},
+    {category: 'Mathematics', value:3},
+    {category: 'History', value:4},
+    {category: 'Geography', value:5},
+    {category: 'Computer', value:6},
+    {category: 'Art', value:7}
 ]
 
-export default MenuItems;
+export default categories;
