@@ -1,53 +1,38 @@
 import React, { useState } from 'react';
 import Router from 'next/router';
 import categories from './Data';
-import {Button, TextField, MenuItem, Grid, Paper} from '@mui/material';
+import {Button, TextField, MenuItem, Grid, Paper, Avatar} from '@mui/material';
+
 
 
 export const DropMenu=()=>{
-    const [details, setDetails]=useState({names:'', category:''})
+
+    const [details, setDetails]=useState({names:'', label:''})
     
     const handlechange=(e)=>{
-
         const{name, value}=e.target;
-        setDetails({ ...details, [name]:value })
-
+        setDetails(prev=>({...prev, [name]:value }))
     }
-
-    const{names, category}=details
+    const{names, label}=details
        const HandleSubmit=(e)=>{
-
         
-        
-                    if(name.trim && category.trim()){   
-
-                            e.preventDefault();
-                            setDetails('')
-                            
-                            Router.push({pathname:'/Quiz_Page',
-                                        query:{names, category}
-                                        })
-
-                    }else{
-                            e.preventDefault()
-                            setDetails('')
-                        }
-
+                    e.preventDefault()
+                    Router.push({pathname:'/Quiz_Page',
+                                 query:{names,label}
+                                })
             }
 
 
     const Paperstyle={padding:20, height:'60vh', width:400, margin:'80px auto'}
     const pad={mb:'20px'}
-    console.log(details.category)
+    console.log(label)
     
-
 return(
-
 
       <Grid>
         <Paper style={Paperstyle} elevation={10}>
             <Grid align='center'>
-                vh 
+               <Avatar>vH</Avatar>  
             </Grid>
             <form onSubmit={HandleSubmit}>  
                     <TextField 
@@ -63,22 +48,21 @@ return(
             
                     <TextField 
                         select 
-                        label=" Select Category" 
+                        label="Select Category" 
                         variant="outlined" 
                         onChange={handlechange}
-                        defaultValue={0}
-                        value={category}
-                        name="category"
+                        value={label}
+                        name="label"
                         required
                         fullWidth
                         sx={pad}
                         >
-                                    {categories.map((cat)=>(
+                                    {categories.map(({id, category})=>(
                                         <MenuItem 
-                                            key={cat.value} 
-                                            value={cat.category}
+                                            key={id} 
+                                            value={id}
                                         >
-                                            {cat.category}
+                                            {category}
                                         </MenuItem>
                                     
                                     ))}
@@ -90,7 +74,6 @@ return(
                     size='large' 
                     fullWidth
                     >
-
                         SUBMIT
                 </Button>
 
